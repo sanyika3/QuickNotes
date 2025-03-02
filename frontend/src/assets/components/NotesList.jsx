@@ -4,11 +4,13 @@ import axios from "axios";
 import NotesSearch from "./NotesSearch";
 import DeleteNote from "./DeleteNote";
 import PropTypes from "prop-types";
+import useAuth from "./useAuth";
 
 
 function NotesList({ selectedCategory, onSelectNote }){
     const [notes,setNote] = useState([])
     const [search,setSearch] = useState([])
+    const isLoggedIn = useAuth();
 
 
     useEffect(() => {
@@ -60,7 +62,8 @@ function NotesList({ selectedCategory, onSelectNote }){
                             <p><strong>Written by: </strong>{note.user.username}</p>
                             <p><strong>Category: </strong>{note.category}</p>
                             <strong>Updated: </strong>{formattedDate}
-                            <p><DeleteNote id={note.id} /></p>
+
+                            {isLoggedIn ? (<p><DeleteNote id={note.id} /></p>) : null}
                         </div>
                     );
                 })}
